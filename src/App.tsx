@@ -1,13 +1,16 @@
-import { adder } from "@/util";
+import Interface from "./components/Interface";
+import { useConnectedUser } from "./hooks/useConnectedUser";
+import { ConnectWallet } from "./components/ConnectWallet";
 
-function App() {
-  const sum = adder(1, 2);
+export default function App() {
+  const { user } = useConnectedUser();
   return (
-    <div className="min-h-screen bg-orange-400 flex items-center justify-center flex-col gap-12">
-      <h1 className="font-bold text-4xl text-purple-800">Heyy :)</h1>
-      <p>{sum}</p>
+    <div className="min-h-screen flex items-center justify-center flex-col gap-12">
+      {user && user !== "loading" ? (
+        <Interface address={user.address} />
+      ) : (
+        <ConnectWallet />
+      )}
     </div>
   );
 }
-
-export default App;
